@@ -23,6 +23,14 @@
   register: result
   until: result is successful
 
+- name: redhat | adding  RabbitMQ server repository public GPG key
+  ansible.builtin.rpm_key:
+    key: "{{ rabbitmq_server_redhat_repo_key }}"
+    state: present
+  become: true
+  register: result
+  until: result is successful
+
 - name: redhat | downloading RabbitMQ
   ansible.builtin.get_url:
     url: "{{ rabbitmq_redhat_url }}/{{ rabbitmq_redhat_package }}"
